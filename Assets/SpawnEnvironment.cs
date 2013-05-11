@@ -4,27 +4,31 @@ using System.Collections;
 public class SpawnEnvironment : MonoBehaviour {
 	
 	public Transform scraper;
-	private float nextSpawnTime = 0.0f;
-	private float spawnRate = 1.5f;
 
 	// Use this for initialization
-	void Start () {
-
+	void Start () 
+	{
+		ScraperStore = new AssemblyCSharp.scraperStore();
 	}
-	
+	private AssemblyCSharp.scraperStore ScraperStore;
 	// Update is called once per frame
-	void Update () {
-		if(nextSpawnTime < Time.time)
-		{
-			nextSpawnTime = Time.time + spawnRate;
-			spawnScraper();
-		}
-		double kx = gameObject.transform.localPosition.x;
-		double kz = gameObject.transform.localPosition.z;
-		//kx = Mathf.Floor(kx/10)*10;
-		//kz = Mathf.Floor(kz/10)*10;
+	void Update () 
+	{
+		float kx = gameObject.transform.localPosition.x;
+		float kz = gameObject.transform.localPosition.z;
+		int ikx = Mathf.FloorToInt(kx/100)*100;
+		int ikz = Mathf.FloorToInt(kx/100)*100;
+		spawnScraper(ikx + 20,ikz);
 	}
-	
+	void spawnScraper(int x, int z)
+	{
+		Vector3 spawnPos = new Vector3(x, 20, z);
+		int heightVar = ScraperStore.getHeight(x, z);
+		
+		scraper.transform.localScale = new Vector3(25,100 + heightVar, 25);
+		spawnPos.y += heightVar/2;
+		Instantiate(scraper, spawnPos, Quaternion.identity);
+	}
 	void spawnScraper()
 	{
 		Vector3 spawnPos = new Vector3(250, 20, -100) + new Vector3(Random.Range(-50, 50), 0 , Random.Range(-50, 50));
