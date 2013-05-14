@@ -18,20 +18,23 @@ public class SpawnEnvironment : MonoBehaviour {
 	}
 	void spawnSurroundings()
 	{
-		int spawnBoundary = 1000;
-		int gridSize = 130;
+		int spawnBoundary = 500;
+		int gridSize = 1000;
+		int gridSeparation = 100;
 		float kx = gameObject.transform.localPosition.x;
 		float kz = gameObject.transform.localPosition.z;
 		int ikx = Mathf.FloorToInt(kx/gridSize)*gridSize;
 		int ikz = Mathf.FloorToInt(kz/gridSize)*gridSize;
-		for(int i = ikx - spawnBoundary; i < ikx + spawnBoundary; i+= gridSize)
+		if(!ScraperStore.isGridDrawn(ikx, ikz))
 		{
-			for(int j = ikz -spawnBoundary; j < ikz + spawnBoundary; j+= gridSize)
+			for(int i = ikx - spawnBoundary; i < ikx + spawnBoundary; i+= gridSeparation)
 			{
-				if(GameObject.Find((i).ToString()+","+j.ToString())== null){
-					spawnScraper(i,j);
+				for(int j = ikz -spawnBoundary; j < ikz + spawnBoundary; j+= gridSeparation)
+				{
+						spawnScraper(i,j);
 				}
 			}
+			ScraperStore.markGridDrawn(ikx,ikz);
 		}
 	}
 	void spawnScraper(int x, int z)

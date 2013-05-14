@@ -9,8 +9,9 @@ namespace AssemblyCSharp
 		public scraperStore()
 		{
 			heightVals = new Dictionary<string,int>();
+			gridsDrawn = new Dictionary<string, bool>();
 		}
-		private Dictionary<string, int> heightVals;	
+		private Dictionary<string, int> heightVals;	//coords and height of each tower
 		public int getHeight(int x, int z)
 		{
 			if(heightVals.ContainsKey(x.ToString()+","+z.ToString())){
@@ -27,5 +28,23 @@ namespace AssemblyCSharp
 			return height;
 		}
 		
+		private Dictionary<string, bool> gridsDrawn;
+		public bool isGridDrawn(int x, int z)
+		{
+			if(gridsDrawn.ContainsKey(x.ToString()+","+z.ToString())){
+				return true;
+			}
+			else return false;
+		}
+		public int markGridDrawn(int x, int z)
+		{
+			try{
+				gridsDrawn.Add(x.ToString()+","+z.ToString(), true);
+			}
+			catch(System.ArgumentException){
+				return -1;
+			}
+			return 1;
+		}
 	}
 }
