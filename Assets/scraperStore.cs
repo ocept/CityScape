@@ -24,7 +24,12 @@ namespace AssemblyCSharp
 		public int setHeight(int x, int z)
 		{
 			int height = Random.Range(75, 250);
-			heightVals.Add(x.ToString()+","+z.ToString(), height);
+			try{
+				heightVals.Add(x.ToString()+","+z.ToString(), height);
+			}
+			catch(System.ArgumentException){
+				return heightVals[x.ToString()+","+z.ToString()];
+			}
 			return height;
 		}
 		
