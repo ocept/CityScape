@@ -18,12 +18,20 @@ public class SpawnEnvironment : MonoBehaviour {
 	}
 	void spawnSurroundings()
 	{
+		int spawnBoundary = 1000;
+		int gridSize = 130;
 		float kx = gameObject.transform.localPosition.x;
 		float kz = gameObject.transform.localPosition.z;
-		int ikx = Mathf.FloorToInt(kx/100)*100;
-		int ikz = Mathf.FloorToInt(kz/100)*100;
-		if(GameObject.Find((ikx + 20).ToString()+","+ikz.ToString())== null){
-			spawnScraper(ikx + 20,ikz);
+		int ikx = Mathf.FloorToInt(kx/gridSize)*gridSize;
+		int ikz = Mathf.FloorToInt(kz/gridSize)*gridSize;
+		for(int i = ikx - spawnBoundary; i < ikx + spawnBoundary; i+= gridSize)
+		{
+			for(int j = ikz -spawnBoundary; j < ikz + spawnBoundary; j+= gridSize)
+			{
+				if(GameObject.Find((i).ToString()+","+j.ToString())== null){
+					spawnScraper(i,j);
+				}
+			}
 		}
 	}
 	void spawnScraper(int x, int z)
