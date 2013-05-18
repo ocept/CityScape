@@ -4,7 +4,9 @@ using System.Collections;
 public class SpawnEnvironment : MonoBehaviour {
 	
 	public Transform scraper;
-
+	protected int spawnBoundary = 500;
+	protected int gridSeparation = 100;
+	protected int gridSize = 1000;
 	// Use this for initialization
 	void Start () 
 	{
@@ -18,13 +20,21 @@ public class SpawnEnvironment : MonoBehaviour {
 	}
 	void spawnSurroundings()
 	{
-		int spawnBoundary = 500;
-		int gridSize = 1000;
-		int gridSeparation = 100;
+
 		float kx = gameObject.transform.localPosition.x;
 		float kz = gameObject.transform.localPosition.z;
 		int ikx = Mathf.FloorToInt(kx/gridSize)*gridSize;
 		int ikz = Mathf.FloorToInt(kz/gridSize)*gridSize;
+		
+		for(int jkx = ikx - gridSize; jkx <= ikx + gridSize; jkx += gridSize)
+		{
+			for(int jkz = ikz - gridSize; jkz <= ikz + gridSize; jkz += gridSize){
+					drawGrid(jkx, jkz);
+			}		
+		}
+	}
+	int drawGrid(int ikx, int ikz)
+	{
 		if(!ScraperStore.isGridDrawn(ikx, ikz))
 		{
 			for(int i = ikx - spawnBoundary; i < ikx + spawnBoundary; i+= gridSeparation)
@@ -35,7 +45,9 @@ public class SpawnEnvironment : MonoBehaviour {
 				}
 			}
 			ScraperStore.markGridDrawn(ikx,ikz);
+			return 1;
 		}
+		else return 0;
 	}
 	void spawnScraper(int x, int z)
 	{
