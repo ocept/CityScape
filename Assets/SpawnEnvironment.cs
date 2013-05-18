@@ -7,16 +7,26 @@ public class SpawnEnvironment : MonoBehaviour {
 	protected int spawnBoundary = 500;
 	protected int gridSeparation = 100;
 	protected int gridSize = 1000;
+	protected Vector3 camLocationLastSpawn;
 	// Use this for initialization
 	void Start () 
 	{
 		ScraperStore = new AssemblyCSharp.scraperStore();
+		spawnSurroundings();
+		camLocationLastSpawn = gameObject.camera.transform.position;
 	}
 	private AssemblyCSharp.scraperStore ScraperStore;
 	// Update is called once per frame
 	void Update () 
 	{
-		spawnSurroundings(); //TODO: should only be called when camera has moved into new area
+		if(gameObject.camera.transform.position.x < camLocationLastSpawn.x - gridSize ||
+			gameObject.camera.transform.position.x > camLocationLastSpawn.x + gridSize ||
+			gameObject.camera.transform.position.z < camLocationLastSpawn.z - gridSize ||
+			gameObject.camera.transform.position.z > camLocationLastSpawn.z + gridSize)
+		{
+			spawnSurroundings();
+			camLocationLastSpawn = gameObject.camera.transform.position;
+		}
 	}
 	void spawnSurroundings()
 	{
@@ -26,9 +36,9 @@ public class SpawnEnvironment : MonoBehaviour {
 		int ikx = Mathf.FloorToInt(kx/gridSize)*gridSize;
 		int ikz = Mathf.FloorToInt(kz/gridSize)*gridSize;
 		
-		for(int jkx = ikx - gridSize; jkx <= ikx + gridSize; jkx += gridSize)
+		for(int jkx = ikx - gridSize; jkx <= ikx + 2*gridSize; jkx += gridSize)
 		{
-			for(int jkz = ikz - gridSize; jkz <= ikz + gridSize; jkz += gridSize){
+			for(int jkz = ikz - gridSize; jkz <= ikz + 2*gridSize; jkz += gridSize){
 					drawGrid(jkx, jkz);
 			}		
 		}
