@@ -4,13 +4,15 @@ using System.Collections;
 public class SpawnEnvironment : MonoBehaviour {
 	
 	public Transform scraper;
-	protected int spawnBoundary = 500;
+	protected GameObject scraperGroup;
+	protected int spawnBoundary = 250;
 	protected int gridSeparation = 100;
-	protected int gridSize = 1000;
+	protected int gridSize = 500;
 	protected Vector3 camLocationLastSpawn;
 	// Use this for initialization
 	void Start () 
 	{
+		scraperGroup = new GameObject("Scrapers");
 		ScraperStore = new AssemblyCSharp.scraperStore();
 		spawnSurroundings();
 		camLocationLastSpawn = gameObject.camera.transform.position;
@@ -36,9 +38,9 @@ public class SpawnEnvironment : MonoBehaviour {
 		int ikx = Mathf.FloorToInt(kx/gridSize)*gridSize;
 		int ikz = Mathf.FloorToInt(kz/gridSize)*gridSize;
 		
-		for(int jkx = ikx - gridSize; jkx <= ikx + 2*gridSize; jkx += gridSize)
+		for(int jkx = ikx - 3*gridSize; jkx <= ikx + 4*gridSize; jkx += gridSize)
 		{
-			for(int jkz = ikz - gridSize; jkz <= ikz + 2*gridSize; jkz += gridSize){
+			for(int jkz = ikz - 3*gridSize; jkz <= ikz + 4*gridSize; jkz += gridSize){
 					drawGrid(jkx, jkz);
 			}		
 		}
@@ -66,7 +68,9 @@ public class SpawnEnvironment : MonoBehaviour {
 
 		scraper.transform.localScale = new Vector3(25,100 + heightVar, 25);
 		spawnPos.y += heightVar/2;
-		var scrape = Instantiate(scraper, spawnPos, Quaternion.identity);
+		Transform scrape = Object.Instantiate(scraper, spawnPos, Quaternion.identity) as Transform;
 		scrape.name = (x.ToString()+","+z.ToString());
+		//scrape.parent = scraperGroup.transform;
+		//scrape.transform.parent = scraperGroup.transform;
 	}
 }

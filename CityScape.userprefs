@@ -2,15 +2,15 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\SpawnEnvironment.cs">
     <Files>
-      <File FileName="Assets\SpawnEnvironment.cs" Line="22" Column="5" />
+      <File FileName="Assets\SpawnEnvironment.cs" Line="1" Column="1" />
       <File FileName="Assets\scraperStore.cs" Line="1" Column="1" />
       <File FileName="Assets\CameraMove.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="F:\Docs\code\Unity\CityScape\Assets\SpawnEnvironment.cs" line="16" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
+    <Watch file="Assets\SpawnEnvironment.cs" line="70" offsetX="490" offsetY="1035" expression="scraper" liveUpdate="False" />
+  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
 </Properties>
