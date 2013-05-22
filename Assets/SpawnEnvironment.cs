@@ -65,7 +65,7 @@ public class SpawnEnvironment : MonoBehaviour {
 	{
 		Vector3 spawnPos = new Vector3(x, 20, z);
 		int heightVar = ScraperStore.getHeight(x, z);
-
+		
 		scraper.transform.localScale = new Vector3(25,100 + heightVar, 25);
 		spawnPos.y += heightVar/2;
 		Transform scrape = Object.Instantiate(scraper, spawnPos, Quaternion.identity) as Transform;
