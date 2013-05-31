@@ -4,6 +4,7 @@ using System.Collections;
 public class SpawnEnvironment : MonoBehaviour {
 	
 	public Transform scraper;
+	protected float scraperBaseHeight;
 	protected GameObject scraperGroup;
 	protected int spawnBoundary = 250;
 	protected int gridSeparation = 100;
@@ -12,6 +13,8 @@ public class SpawnEnvironment : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
+		scraper.transform.localScale = new Vector3(1,1,1);
+		scraperBaseHeight = scraper.renderer.bounds.size.y;
 		scraperGroup = new GameObject("Scrapers");
 		ScraperStore = new AssemblyCSharp.scraperStore();
 		spawnSurroundings();
@@ -62,12 +65,14 @@ public class SpawnEnvironment : MonoBehaviour {
 		else return 0;
 	}
 	void spawnScraper(int x, int z)
-	{
-		Vector3 spawnPos = new Vector3(x, 20, z);
+	{	
+		Vector3 spawnPos = new Vector3(x, 0, z);
 		int heightVar = ScraperStore.getHeight(x, z);
 		
-		scraper.transform.localScale = new Vector3(25,100 + heightVar, 25);
-		spawnPos.y += heightVar/2;
+		scraper.transform.localScale = new Vector3(25,heightVar, 25);
+		//spawnPos.y = (scraper.renderer.bounds.size.y)/2;
+		spawnPos.y = (float) (scraper.transform.localScale.y * 1.111); //TODO: figure out why the *1.1 is necessary
+		//spawnPos.y += (heightVar/2) * scraperBaseHeight;
 		Transform scrape = Object.Instantiate(scraper, spawnPos, Quaternion.identity) as Transform;
 		scrape.name = (x.ToString()+","+z.ToString());
 		//scrape.parent = scraperGroup.transform;
