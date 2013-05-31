@@ -46,6 +46,7 @@
   <ItemGroup>
      <Compile Include="Assets\CameraMove.cs" />
      <Compile Include="Assets\SpawnEnvironment.cs" />
+     <Compile Include="Assets\despawnScraper.cs" />
      <Compile Include="Assets\scraperStore.cs" />
      <None Include="Assets\Standard Assets\Skyboxes\_skybox info.txt" />
   </ItemGroup>
