@@ -23,7 +23,8 @@ namespace AssemblyCSharp
 		}
 		public int setHeight(int x, int z)
 		{
-			int height = Random.Range(75, 250);
+			int height = Random.Range(40, 150);
+			if(height > 140) height += Random.Range(0,80);
 			try{
 				heightVals.Add(x.ToString()+","+z.ToString(), height);
 			}
