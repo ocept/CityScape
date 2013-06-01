@@ -2,19 +2,24 @@ using UnityEngine;
 using System.Collections;
 
 public class SpawnEnvironment : MonoBehaviour {
-	
-	public Transform scraper;
-	protected float scraperBaseHeight;
+	protected GameObject[] scraper;
 	protected GameObject scraperGroup;
 	protected int spawnBoundary = 250;
 	protected int gridSeparation = 100;
 	protected int gridSize = 500;
 	protected Vector3 camLocationLastSpawn;
+	public const string TowerPath = "Towers";
 	// Use this for initialization
 	void Start () 
 	{
-		scraper.transform.localScale = new Vector3(1,1,1);
-		scraperBaseHeight = scraper.renderer.bounds.size.y;
+		//load scrapers
+		Object[] loadedScrapers = Resources.LoadAll(TowerPath, typeof(UnityEngine.GameObject));
+		scraper = new GameObject[loadedScrapers.Length];
+		for(int i = 0; i < loadedScrapers.Length; i++)
+		{
+			scraper[i] = (GameObject) loadedScrapers[i];
+		}
+		
 		scraperGroup = new GameObject("Scrapers");
 		ScraperStore = new AssemblyCSharp.scraperStore();
 		spawnSurroundings();
@@ -68,12 +73,12 @@ public class SpawnEnvironment : MonoBehaviour {
 	{	
 		Vector3 spawnPos = new Vector3(x, 0, z);
 		int heightVar = ScraperStore.getHeight(x, z);
-		
-		scraper.transform.localScale = new Vector3(25,heightVar, 25);
+		int scraperType = Random.Range(0, scraper.Length);
+		scraper[scraperType].transform.localScale = new Vector3(25,heightVar, 25);
 		//spawnPos.y = (scraper.renderer.bounds.size.y)/2;
-		spawnPos.y = (float) (scraper.transform.localScale.y * 1.111); //TODO: figure out why the *1.1 is necessary
+		spawnPos.y = (float) (scraper[scraperType].transform.localScale.y * 1.111); //TODO: figure out why the *1.1 is necessary
 		//spawnPos.y += (heightVar/2) * scraperBaseHeight;
-		Transform scrape = Object.Instantiate(scraper, spawnPos, Quaternion.identity) as Transform;
+		GameObject scrape = Object.Instantiate(scraper[scraperType], spawnPos, Quaternion.identity) as GameObject;
 		scrape.name = (x.ToString()+","+z.ToString());
 		//scrape.parent = scraperGroup.transform;
 		//scrape.transform.parent = scraperGroup.transform;
