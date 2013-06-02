@@ -75,9 +75,6 @@ public class SpawnEnvironment : MonoBehaviour {
 		int heightVar = ScraperStore.getHeight(x, z);
 		int scraperType = Random.Range(0, scraper.Length);
 		scraper[scraperType].transform.localScale = new Vector3(25,heightVar, 25);
-		//spawnPos.y = (scraper.renderer.bounds.size.y)/2;
-		spawnPos.y = (float) (scraper[scraperType].transform.localScale.y * 1.111); //TODO: figure out why the *1.1 is necessary
-		//spawnPos.y += (heightVar/2) * scraperBaseHeight;
 		GameObject scrape = Object.Instantiate(scraper[scraperType], spawnPos, Quaternion.identity) as GameObject;
 		scrape.name = (x.ToString()+","+z.ToString());
 		//scrape.parent = scraperGroup.transform;
